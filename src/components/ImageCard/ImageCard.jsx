@@ -12,6 +12,10 @@ const ImageCard = ({
     },
   },
 }) => {
+  const handleImageClick = () => {
+    console.log("Image clicked");
+  };
+
   return (
     <div className={css.galleryThumb}>
       <img
@@ -19,6 +23,7 @@ const ImageCard = ({
         src={small}
         alt={alt_description}
         width="360"
+        onClick={handleImageClick}
       />
       <div className={css.thumbBlock}>
         <p className={css.textPhoto}>

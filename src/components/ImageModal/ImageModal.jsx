@@ -32,11 +32,13 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
       {image && (
         <div className={css.containerModal}>
           <div className={css.imgContainer}>
-            <img
-              className={css.image}
-              src={image.urls.regular}
-              alt={image.alt_description}
-            />
+            {image.urls && image.urls.regular && (
+              <img
+                className={css.image}
+                src={image.urls.regular}
+                alt={image.alt_description}
+              />
+            )}
           </div>
           <div className={css.moreInform}>
             <p className={css.author}>
