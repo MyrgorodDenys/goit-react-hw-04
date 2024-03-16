@@ -6,32 +6,26 @@ const ImageCard = ({
     alt_description,
     likes,
     urls: { small },
-    user: {
-      name,
-      social: { portfolio_url },
-    },
+    user: { name },
   },
+  imageClick,
 }) => {
-  const handleImageClick = () => {
-    console.log("Image clicked");
-  };
-
   return (
-    <div className={css.galleryThumb}>
+    <div
+      className={css.galleryThumb}
+      onClick={() => imageClick()}
+    >
       <img
         className={css.galleryImage}
         src={small}
         alt={alt_description}
         width="360"
-        onClick={handleImageClick}
       />
       <div className={css.thumbBlock}>
         <p className={css.textPhoto}>
           <strong>Author</strong>
           <br />
-          <a href={portfolio_url} target="_blank" rel="noopener noreferrer">
-            {name}
-          </a>
+          {name}
         </p>
         <p className={css.textPhoto}>
           <strong>Likes: </strong>

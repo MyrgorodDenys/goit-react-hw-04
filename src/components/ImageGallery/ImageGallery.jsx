@@ -4,24 +4,26 @@ import css from "./ImageGallery.module.css";
 
 const ImageGallery = ({ imageList, openModal }) => {
   const imageClick = (event) => {
-    const imgItem = event.target.closest("li");
-    if (imgItem) {
-      const imgID = imgItem.dataset.id;
-      const clickedImageItem = imageList.find((image) => image.id === imgID);
-      if (clickedImageItem) {
-        openModal(clickedImageItem);
-      }
-    }
+    openModal(event);
   };
   return (
     <section className={css.containerGallery}>
       {imageList.length > 0 && (
-        <ul className={css.gallery} onClick={imageClick}>
-          {imageList.map((img) => (
-            <li className={css.galleryItem} key={img.id} data-id={img.id}>
-              <ImageCard imageItem={img} />
-            </li>
-          ))}
+        <ul className={css.gallery}>
+          {imageList.map((img) => {
+            return (
+              <li
+                className={css.galleryItem}
+                key={img.id}
+                data-id={img.id}
+              >
+                <ImageCard
+                  imageItem={img}
+                  imageClick={() => imageClick(img)}
+                />
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>

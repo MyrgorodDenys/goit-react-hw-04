@@ -12,6 +12,8 @@ const formatDate = (dateString) => {
 
 const ImageModal = ({ isOpen, onCloseModal, image }) => {
   useEffect(() => {
+    Modal.setAppElement("#root");
+
     if (isOpen) {
       disableBodyScroll(document.body);
     } else {
@@ -26,7 +28,10 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
       isOpen={isOpen}
       onRequestClose={onCloseModal}
     >
-      <button className={css.closeButton} onClick={onCloseModal}>
+      <button
+        className={css.closeButton}
+        onClick={onCloseModal}
+      >
         <RiCloseLine size="40" />
       </button>
       {image && (
@@ -60,7 +65,10 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
             )}
             <ul className={css.tagsList}>
               {image.tags.map((tag, index) => (
-                <li className={css.tagItem} key={index}>
+                <li
+                  className={css.tagItem}
+                  key={index}
+                >
                   &#35;{tag.title}
                 </li>
               ))}

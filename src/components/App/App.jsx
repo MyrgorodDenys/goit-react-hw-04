@@ -1,6 +1,6 @@
 import { getImagesUnplash } from "../../images-api";
 import { useEffect, useState } from "react";
-import Modal from "react-modal";
+
 import "../../../node_modules/modern-normalize/modern-normalize.css";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./App.module.css";
@@ -25,13 +25,14 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
-    Modal.setAppElement("#root");
     const fetchData = async () => {
       try {
         setLoading(true);
         const dataImg = await getImagesUnplash(search, page);
         setTotalPages(dataImg.total_pages);
-        setImages(dataImg.results);
+        setImages((prevState) => {
+          return [...prevState, ...dataImg.results];
+        });
         if (search.trim() === "") {
           toast.error("The search field cannot be empty!");
           return;
@@ -68,12 +69,7 @@ function App() {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const nextPage = page + 1;
-      const dataImages = await getImagesUnplash(search, nextPage);
-      setImages((prevImages) => {
-        return [...prevImages, ...dataImages.results];
-      });
-      setPage(nextPage);
+      setPage((prevState) => prevState + 1);
     } catch (error) {
       setError(true);
     } finally {
@@ -104,9 +100,15 @@ function App() {
       />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      <ImageGallery imageList={images} openModal={openModal} />
+      <ImageGallery
+        imageList={images}
+        openModal={openModal}
+      />
       {!isSearching && isVisible() && (
-        <LoadMoreBtn onClick={handleLoadMore} isVisible={isVisible} />
+        <LoadMoreBtn
+          onClick={handleLoadMore}
+          isVisible={isVisible}
+        />
       )}
       {loading && <LoaderMore />}
       <ImageModal
