@@ -1,25 +1,13 @@
+import { useEffect } from "react";
 import Modal from "react-modal";
 import { RiCloseLine } from "react-icons/ri";
-import { format } from "date-fns";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import css from "./ImageModal.module.css";
-import { useEffect } from "react";
 import PropTypes from "prop-types";
-
-const formatDate = (dateString) => {
-  return format(new Date(dateString), "MMMM dd yyyy");
-};
 
 const ImageModal = ({ isOpen, onCloseModal, image }) => {
   useEffect(() => {
     Modal.setAppElement("#root");
-
-    if (isOpen) {
-      disableBodyScroll(document.body);
-    } else {
-      enableBodyScroll(document.body);
-    }
-  }, [isOpen]);
+  }, []);
 
   return (
     <Modal
@@ -28,10 +16,7 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
       isOpen={isOpen}
       onRequestClose={onCloseModal}
     >
-      <button
-        className={css.closeButton}
-        onClick={onCloseModal}
-      >
+      <button className={css.closeButton} onClick={onCloseModal}>
         <RiCloseLine size="40" />
       </button>
       {image && (
@@ -65,17 +50,11 @@ const ImageModal = ({ isOpen, onCloseModal, image }) => {
             )}
             <ul className={css.tagsList}>
               {image.tags.map((tag, index) => (
-                <li
-                  className={css.tagItem}
-                  key={index}
-                >
-                  &#35;{tag.title}
+                <li className={css.tagItem} key={index}>
+                  #{tag.title}
                 </li>
               ))}
             </ul>
-            <p className={css.created}>
-              Created on: {formatDate(image.created_at)}
-            </p>
             {image.user.location && (
               <p className={css.location}>Location: {image.user.location}</p>
             )}
@@ -108,7 +87,6 @@ ImageModal.propTypes = {
         title: PropTypes.string,
       })
     ),
-    created_at: PropTypes.string,
   }),
 };
 

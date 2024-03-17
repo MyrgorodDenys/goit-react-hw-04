@@ -11,15 +11,13 @@ const ImageCard = ({
   imageClick,
 }) => {
   return (
-    <div
-      className={css.galleryThumb}
-      onClick={() => imageClick()}
-    >
+    <div className={css.galleryThumb}>
       <img
         className={css.galleryImage}
         src={small}
         alt={alt_description}
         width="360"
+        onClick={() => imageClick()}
       />
       <div className={css.thumbBlock}>
         <p className={css.textPhoto}>

@@ -1,10 +1,8 @@
 import { getImagesUnplash } from "../../images-api";
 import { useEffect, useState } from "react";
-
 import "../../../node_modules/modern-normalize/modern-normalize.css";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./App.module.css";
-
 import SearchBar from "../SearchBar/SearchBar";
 import Loader from "../Loader/Loader";
 import ImageGallery from "../ImageGallery/ImageGallery";
@@ -51,10 +49,8 @@ function App() {
       } finally {
         setLoading(false);
         setIsSearching(false);
-        setError(false);
       }
     };
-
     fetchData();
   }, [search, page]);
 
@@ -66,15 +62,8 @@ function App() {
     setSearch(searchQuery);
   };
 
-  const handleLoadMore = async () => {
-    try {
-      setLoading(true);
-      setPage((prevState) => prevState + 1);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+  const handleLoadMore = () => {
+    setPage((prevState) => prevState + 1);
   };
 
   const isVisible = () => {
@@ -100,15 +89,9 @@ function App() {
       />
       {loading && <Loader />}
       {error && <ErrorMessage />}
-      <ImageGallery
-        imageList={images}
-        openModal={openModal}
-      />
+      <ImageGallery imageList={images} openModal={openModal} />
       {!isSearching && isVisible() && (
-        <LoadMoreBtn
-          onClick={handleLoadMore}
-          isVisible={isVisible}
-        />
+        <LoadMoreBtn onClick={handleLoadMore} isVisible={isVisible} />
       )}
       {loading && <LoaderMore />}
       <ImageModal
