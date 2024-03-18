@@ -23,6 +23,10 @@ function App() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
+    if (search.trim() === "") {
+      return;
+    }
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -31,10 +35,7 @@ function App() {
         setImages((prevState) => {
           return [...prevState, ...dataImg.results];
         });
-        if (search.trim() === "") {
-          toast.error("The search field cannot be empty!");
-          return;
-        } else if (!dataImg.total) {
+        if (!dataImg.total) {
           toast(
             "Sorry, we have not found the photos for your request. Try to write it differently.",
             {
@@ -51,6 +52,7 @@ function App() {
         setIsSearching(false);
       }
     };
+
     fetchData();
   }, [search, page]);
 
